@@ -1,0 +1,94 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../paper-item/paper-item.html">
+
+<!--
+    Add an address using a Google Places Search form.
+    It automatically retrieves address from Google and preloads the data.
+    It will returns 5 variable, unit, block, street, postal_code, country through the form.
+
+    Currently it only works for one address with one form.
+
+    ### Example
+
+        <blink-address-input address="18 Howard Road Singapore" unit="#08-04"></blink-address-input>
+-->
+<dom-module id="blink-address-input">
+    <template>
+        <paper-input id="autocomplete" type="text" value="{{address}}" label="Enter your Address" onFocus="geolocate()"></paper-input>
+        <paper-input name="unit" type="text" label="Unit Number" value="{{unit}}"></paper-input>
+        <input type="hidden" name="block" id="block" />
+        <input type="hidden" name="street" id="street" />
+        <input type="hidden" name="postal_code" id="postal_code" />
+        <input type="hidden" name="country" id="country" />
+    </template>
+
+    <script type="text/javascript">
+        Polymer({
+            is: 'blink-address-input',
+            properties: {
+                /** Free form text box for address */
+                address: {
+                    type: String,
+                },
+                /** Unit Number for Address */
+                unit: {
+                    type: String
+                },
+            }
+        });
+
+        var placeSearch, autocomplete;
+
+        var componentForm = {
+          street_number: 'short_name', // block
+          route: 'long_name', // street
+          postal_code: 'short_name', // postal_code
+          country: 'short_name'
+        };
+
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                /** @type {!HTMLInputElement} */ (document.getElementById('autocomplete')),
+                {types: ['geocode']});
+
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        function fillInAddress() {
+            var place = autocomplete.getPlace();
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType]];
+                    if (addressType == 'street_number')
+                        document.getElementById('block').value = val;
+                    if (addressType == 'route')
+                        document.getElementById('street').value = val;
+                    if (addressType == 'postal_code')
+                        document.getElementById('postal_code').value = val;
+                    if (addressType == 'country')
+                        document.getElementById('country').value = val;
+                }
+            }
+        }
+
+        function geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    autocomplete.setBounds(circle.getBounds());
+                });
+            }
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZvTHS6mm67eoaigMQuHMb-eKZbbKhMIQ&libraries=places&callback=initAutocomplete"
+        async defer></script>
+</dom-module>
