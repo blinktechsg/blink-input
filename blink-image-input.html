@@ -4,8 +4,16 @@
 <!--
     Add an Image Input field for forms. Preview for images are fixed at maximum 400px by 192px
 
+    ### Example
+
+        <blink-image-input name="image"></blink-image-input>
+
     ### Styling
-    The
+    The following custom properties and mixins are available for styling:
+
+    Custom property | Description | Default
+    ----------------|-------------|----------
+    `--blink-image-input-background-color` | The background color of the image placeholder | `#E84A5F`
 -->
 <dom-module id="blink-image-input">
     <template>
@@ -16,6 +24,7 @@
             max-width: 400px;
             overflow: hidden!important;
             margin-bottom: 10px;
+            background-color: var(--blink-image-input-background-color, #E84A5F) !important;
         }
         .upload input {
             display: block!important;
@@ -30,12 +39,9 @@
             margin-bottom: 10px;
             font-weight: bold;
         }
-        .main-color {
-            background-color: var(--blink-image-input-background-color, #E84A5F);
-        }
         </style>
         <label for="[[name]]">{{label}}</label>
-        <div class="upload main-color" style$="background: url('[[placeholder]]') center center no-repeat;" id="temp-[[name]]">
+        <div class="upload" style$="background: url('[[placeholder]]') center center no-repeat;" id="temp-[[name]]">
             <input type="file" name="[[name]]" on-change="_loadImage" accept="image/*"/>
         </div>
         <img id="{{name}}"/>
@@ -47,6 +53,7 @@
                 /** The field name for the image */
                 name: {
                     type: String,
+                    value: "image",
                 },
                 /** A placeholder image. */
                 placeholder: {
