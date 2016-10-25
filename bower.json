@@ -1,9 +1,16 @@
 {
-  "name": "blink-address-input",
-  "description": "Add an address using a Google Places Search form.",
-  "main": "blink-address-input.html",
+  "name": "blink-input",
+  "version": "0.0.2",
+  "description": "Blink Tech customed fields.",
+  "main": [
+    "blink-address-input.html",
+    "blink-image-input.html",
+    "blink-password-change-input.html",
+    "blink-csrf.html",
+  ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.4.0"
+    "polymer": "Polymer/polymer#^1.4.0",
+    "paper-input": "PolymerElements/paper-input#^1.1.8",
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
