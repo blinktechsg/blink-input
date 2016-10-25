@@ -1,0 +1,80 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-input/paper-input.html">
+
+<!--
+    Add an Image Input field for forms. Preview for images are fixed at maximum 400px by 192px
+
+    ### Styling
+    The
+-->
+<dom-module id="blink-image-input">
+    <template>
+        <style is="custom-style">
+        .upload {
+            width: 100%;
+            height: 192px;
+            max-width: 400px;
+            overflow: hidden!important;
+            margin-bottom: 10px;
+        }
+        .upload input {
+            display: block!important;
+            max-width: 400px;
+            width: 100%;
+            height: 192px;
+            opacity: 0!important;
+            overflow: hidden!important;
+            z-index: 1;
+        }
+        label {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .main-color {
+            background-color: var(--blink-image-input-background-color, #E84A5F);
+        }
+        </style>
+        <label for="[[name]]">{{label}}</label>
+        <div class="upload main-color" style$="background: url('[[placeholder]]') center center no-repeat;" id="temp-[[name]]">
+            <input type="file" name="[[name]]" on-change="_loadImage" accept="image/*"/>
+        </div>
+        <img id="{{name}}"/>
+    </template>
+    <script>
+        Polymer({
+            is: 'blink-image-input',
+            properties: {
+                /** The field name for the image */
+                name: {
+                    type: String,
+                },
+                /** A placeholder image. */
+                placeholder: {
+                    type: String,
+                    value: '/media/img/camera.png',
+                    notify: true,
+                },
+                /** Label for the Image Field */
+                label: {
+                    type: String,
+                    value: 'Image',
+                },
+                /** An attribute to determine if an image is pending uploading */
+                changed: {
+                    type: Boolean,
+                    reflectToAttribute: true,
+                    value: false,
+                }
+            },
+            _loadImage: function(e) {
+                var reader = new FileReader();
+                var temp = document.getElementById("temp-"+this.name);
+                reader.onload = function() {
+                    temp.style.backgroundImage = "url("+reader.result+")";
+                };
+                reader.readAsDataURL(e.target.files[0]);
+                this.changed = true;
+            },
+        });
+    </script>
+</dom-module>

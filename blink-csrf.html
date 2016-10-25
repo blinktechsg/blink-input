@@ -1,0 +1,24 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+    Cross Site Request Forgery field for form.
+    Update the cookie value directly in this element.
+-->
+<dom-module id="blink-csrf">
+    <template>
+        <input type="hidden" name="csrfmiddlewaretoken" value="{{_csrf}}">
+    </template>
+    <script src="cookie.js"></script>
+    <script>
+    Polymer({
+        is: "blink-csrf",
+        properties: {
+            /** private variable for csrf */
+            _csrf: String,
+        },
+        ready: function() {
+            this._csrf = Cookies.get('blink_RyFADfb3BzkG2hyK');
+        },
+    });
+    </script>
+</dom-module>
