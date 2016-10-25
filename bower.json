@@ -6,7 +6,7 @@
     "blink-address-input.html",
     "blink-image-input.html",
     "blink-password-change-input.html",
-    "blink-csrf.html",
+    "blink-csrf.html"
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
