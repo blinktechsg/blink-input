@@ -1,6 +1,6 @@
 {
   "name": "blink-input",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Blink Tech customed fields.",
   "main": [
     "blink-address-input.html",
