@@ -16,10 +16,10 @@
     <template>
         <paper-input id="autocomplete" type="text" value="{{address}}" label="Enter your Address" onFocus="geolocate()"></paper-input>
         <paper-input name="unit" type="text" label="Unit Number" value="{{unit}}"></paper-input>
-        <input type="hidden" name="block" id="block" />
-        <input type="hidden" name="street" id="street" />
-        <input type="hidden" name="postal_code" id="postal_code" />
-        <input type="hidden" name="country" id="country" />
+        <input type="hidden" name="block" id="block" value="[[block]]" />
+        <input type="hidden" name="street" id="street" value="[[street]]" />
+        <input type="hidden" name="postal_code" id="postal_code" value="[[postal_code]]" />
+        <input type="hidden" name="country" id="country" value="[[country]]" />
     </template>
 
     <script type="text/javascript">
