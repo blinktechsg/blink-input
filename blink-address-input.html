@@ -18,7 +18,7 @@
         <paper-input name="unit" type="text" label="Unit Number" value="{{unit}}"></paper-input>
         <input type="hidden" name="block" id="block" value="[[block]]" />
         <input type="hidden" name="street" id="street" value="[[street]]" />
-        <input type="hidden" name="postal_code" id="postal_code" value="[[postal_code]]" />
+        <input type="hidden" name="postal_code" id="postal_code" value="[[postalCode]]" />
         <input type="hidden" name="country" id="country" value="[[country]]" />
     </template>
 
@@ -43,7 +43,7 @@
                     type: String
                 },
                 /** Postal Code for Address */
-                postal_code: {
+                postalCode: {
                     type: String
                 },
                 /** Country of Address */
